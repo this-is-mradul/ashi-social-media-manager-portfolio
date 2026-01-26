@@ -820,7 +820,7 @@ img {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: var(--space-lg);
-    max-width: 1000px;
+    max-width: 1200px;
     margin: 0 auto;
 }
 
@@ -844,15 +844,18 @@ img {
 }
 
 .content-icon {
-    font-size: 2.5rem;
+    font-size: var(--font-size-sm);
     flex-shrink: 0;
     width: 60px;
     height: 60px;
     display: flex;
     align-items: center;
     justify-content: center;
-    background: var(--gradient-1);
     border-radius: var(--radius-sm);
+    color: white;
+    font-weight: 800;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
 }
 
 .content-info h3 {
