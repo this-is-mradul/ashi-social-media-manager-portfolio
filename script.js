@@ -188,31 +188,64 @@ function initScrollAnimations() {
 /* ===================================
    NAVIGATION
    =================================== */
-function initNavigation() {
-    const navLinks = document.querySelectorAll('.nav-link');
-    const sections = document.querySelectorAll('section[id]');
+let navLinks, sections;
 
-    function updateActiveNav() {
-        const scrollPos = window.scrollY + window.innerHeight / 2;
+// Make updateActiveNav globally accessible
+function updateActiveNav() {
+    const scrollPos = window.scrollY + 100; // Offset for better detection
+    let activeNav = '';
 
-        sections.forEach(section => {
-            const sectionTop = section.offsetTop;
-            const sectionHeight = section.offsetHeight;
-            const sectionId = section.getAttribute('id');
+    // Get section positions
+    const aboutSection = document.getElementById('about');
+    const skillsSection = document.getElementById('skills');
+    const contentStrategySection = document.getElementById('content-strategy');
+    const experienceSection = document.getElementById('experience');
+    const clientsSection = document.getElementById('clients');
+    const contactSection = document.getElementById('contact');
 
-            if (scrollPos >= sectionTop && scrollPos < sectionTop + sectionHeight) {
-                navLinks.forEach(link => {
-                    link.classList.remove('active');
-                    if (link.getAttribute('href') === `#${sectionId}`) {
-                        link.classList.add('active');
-                    }
-                });
-            }
-        });
+    // Determine active nav based on scroll position
+    if (scrollPos < (skillsSection?.offsetTop || 0)) {
+        // Top of page to before Skills section - About is active
+        activeNav = 'about';
+    } else if (scrollPos >= (skillsSection?.offsetTop || 0) && scrollPos < (contentStrategySection?.offsetTop || 0)) {
+        // Skills section - Skills is active
+        activeNav = 'skills';
+    } else if (scrollPos >= (contentStrategySection?.offsetTop || 0) && scrollPos < (clientsSection?.offsetTop || 0)) {
+        // Content Strategy and Experience sections - Work is active
+        activeNav = 'content-strategy';
+    } else if (scrollPos >= (clientsSection?.offsetTop || 0) && scrollPos < (contactSection?.offsetTop || 0)) {
+        // Clients section - Clients is active
+        activeNav = 'clients';
+    } else if (scrollPos >= (contactSection?.offsetTop || 0)) {
+        // Contact section - Contact is active
+        activeNav = 'contact';
     }
 
+    // Set the active nav link – only one link is active at a time
+    navLinks.forEach(link => {
+        const href = link.getAttribute('href').substring(1); // Remove # prefix
+        link.classList.toggle('active', href === activeNav);
+    });
+}
+
+function initNavigation() {
+    navLinks = document.querySelectorAll('.nav-link');
+    sections = document.querySelectorAll('section[id]');
+
+    // Initial update
     updateActiveNav();
-    window.addEventListener('scroll', updateActiveNav);
+    
+    // Update on scroll using requestAnimationFrame
+    let ticking = false;
+    window.addEventListener('scroll', () => {
+        if (!ticking) {
+            requestAnimationFrame(() => {
+                updateActiveNav();
+                ticking = false;
+            });
+            ticking = true;
+        }
+    });
 }
 
 /* ===================================
@@ -228,6 +261,11 @@ function initSmoothScroll() {
             const targetSection = document.querySelector(targetId);
 
             if (targetSection) {
+                if (link.classList.contains('nav-link')) {
+                    navLinks.forEach(nl => nl.classList.remove('active'));
+                    link.classList.add('active');
+                }
+                
                 const offsetTop = targetSection.offsetTop - 20;
                 window.scrollTo({
                     top: offsetTop,
