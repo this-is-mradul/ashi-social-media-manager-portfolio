@@ -16,13 +16,13 @@
     --color-accent: #E7F060;
     --color-accent-hover: #d4dd4d;
 
-    /* Gradients for project cards */
-    --gradient-1: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    --gradient-2: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
-    --gradient-3: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
-    --gradient-4: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
-    --gradient-5: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
-    --gradient-6: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+    /* Solid colors for project cards (replaced gradients) */
+    --gradient-1: var(--color-bg-dark);
+    --gradient-2: var(--color-bg-dark);
+    --gradient-3: var(--color-bg-dark);
+    --gradient-4: var(--color-bg-dark);
+    --gradient-5: var(--color-bg-dark);
+    --gradient-6: var(--color-bg-dark);
 
     /* Typography */
     --font-primary: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
@@ -366,6 +366,7 @@ img {
     align-items: center;
     justify-content: center;
     flex-shrink: 0;
+    color: var(--color-accent);
 }
 
 .project-image .project-icon {
@@ -483,6 +484,7 @@ img {
     font-size: 1.5rem;
     margin-bottom: var(--space-xs);
     display: block;
+    color: var(--color-text);
 }
 
 .highlight-card h4 {
@@ -537,6 +539,30 @@ img {
 .skill-tag:hover {
     background: var(--color-accent);
     border-color: var(--color-accent);
+}
+
+.certification-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-xs);
+    text-decoration: none;
+    color: var(--color-text);
+    background: linear-gradient(135deg, var(--color-accent), #f0f4a0);
+    border: 2px solid var(--color-accent);
+    font-weight: 600;
+    position: relative;
+    overflow: hidden;
+}
+
+.certification-tag:hover {
+    background: linear-gradient(135deg, var(--color-accent-hover), #e8ed90);
+    border-color: var(--color-accent-hover);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(231, 240, 96, 0.3);
+}
+
+.certification-tag i {
+    font-size: 1.1em;
 }
 
 /* ===================================
@@ -844,7 +870,7 @@ img {
 }
 
 .content-icon {
-    font-size: var(--font-size-sm);
+    font-size: 2rem;
     flex-shrink: 0;
     width: 60px;
     height: 60px;
@@ -852,7 +878,7 @@ img {
     align-items: center;
     justify-content: center;
     border-radius: var(--radius-sm);
-    color: white;
+    color: var(--color-accent);
     font-weight: 800;
     letter-spacing: 0.05em;
     text-transform: uppercase;
